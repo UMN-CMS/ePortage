@@ -41,5 +41,7 @@ create table Attachments
 	attach_id int unsigned auto_increment,	
 	primary key (attach_id),
 	test_id int,
+	attachdesc varchar (120),
+	comments varchar (200),
 	attachpath varchar (250)
 ); 
