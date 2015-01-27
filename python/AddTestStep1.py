@@ -9,7 +9,7 @@ cursor = cnx.cursor()
 # FIX ME TO WORK WITH CGI!
 card_id = 4
 # Get card sn from database, save first result
-cursor.execute("select sn from card where id='%d'" % ( card_id, ))
+cursor.execute("select sn from Card where card_id='%d'" % ( card_id, ))
 for sn in cursor:
 	card_sn = sn
 
@@ -27,13 +27,13 @@ print "<form enctype=\"multipart/form-data\" action=\"AddTestStep2.py\" method=\
 print "<INPUT TYPE='hidden' name='card_id' value='%d'>" % ( card_id, )
 
 # tester
-cursor.execute("select person_id, name from People")
+cursor.execute("select person_id, person_name from People")
 
 print "<p>Tester:"
 print "<SELECT name=\"person_id\">"
 
-for (person_id, name) in cursor:
-	print "  <OPTION value='%d'>%s</OPTION>" % (person_id, name)
+for (person_id, person_name) in cursor:
+	print "  <OPTION value='%d'>%s</OPTION>" % (person_id, person_name)
 
 print "</SELECT>"
 
