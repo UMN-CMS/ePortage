@@ -1,6 +1,8 @@
 #!/usr/bin/python
 import mysql.connector
 from connect import connect
+import cgi, os
+import cgitb; cgitb.enable()
 
 #connect
 cnx = connect(0)
