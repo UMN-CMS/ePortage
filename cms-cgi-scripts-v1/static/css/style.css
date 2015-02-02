@@ -1,0 +1,29 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.uHTR_body{
+	background-color: #CCAA44
+}
+
+
+.sub-card-form{
+	background-color: rgb(199, 215, 190);
+}
+.sub-card{
+	color: red;
+}
+.sub-card-submit{
+	color: red;
+}
+
+.Portage_table{
+	border-spacing: 2px;
+	border-color: gray;
+	background-color: rgb(215, 255, 202);
+	margin-left: 25px;
+}
+
