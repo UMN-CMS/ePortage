@@ -1,7 +1,6 @@
 create table Card
 (
 	sn int not null,
-	Mac_address char(18),
 	card_id int unsigned auto_increment,
 	primary key (card_id)
 );
@@ -44,4 +43,22 @@ create table Attachments
 	attachdesc varchar (120),
 	comments varchar (200),
 	attachpath varchar (250)
-); 
+);
+
+create table Card_Info_Types
+(
+	info_type_id int unsigned auto_increment,
+	primary key (info_type_id),
+	Info_Name varchar (30),
+	Info_Desc_Short varchar (100),
+	Info_Desc_Long varchar (300)
+);
+
+create table Card_Info
+(
+	info_id int unsigned auto_increment,
+	primary key (info_id),
+	card_id int not null,
+	info_type int not null,
+	info varchar (300)
+);
