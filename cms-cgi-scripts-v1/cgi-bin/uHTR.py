@@ -12,15 +12,13 @@ print "Content-type: text/html\n"
 form = cgi.FieldStorage()
 card_id = form.getvalue('card_id')
 serial_num = form.getvalue('serial_num')
-mac = form.getvalue('mac')
 
 base.header(title='uHTR ePortage')
 base.top()
 print 'card_id = ', card_id
 print  'serial_num = ', serial_num
-print 'mac = ', mac
 
-uHTR_Functions.add_test_tab(serial_num, mac, card_id)
+uHTR_Functions.add_test_tab(serial_num, card_id)
 
 uHTR_Functions.ePortage(1, serial_num, 'Internal links Lumi')
 uHTR_Functions.ePortage(2, serial_num, 'Internal links F2B')

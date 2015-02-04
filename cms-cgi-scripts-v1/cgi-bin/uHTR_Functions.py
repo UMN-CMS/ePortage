@@ -2,14 +2,14 @@ from connect import connect
 def Portage_fetch(test_type_id, card_sn):
     db = connect(1)
     cur = db.cursor()
-    cur.execute("SELECT people.person_name, test.day, test.successful, test.comments, test_type.name, test.test_id FROM test, test_type, people, card  WHERE test_type.test_type = %(test_id)s AND card.sn = %(sn)s AND people.person_id = test.person_id AND test_type.test_type=test.test_type_id AND test.card_id = card.card_id ORDER BY test.day ASC" %{'test_id':test_type_id, 'sn':card_sn})
+    cur.execute("SELECT People.person_name, Test.day, Test.successful, Test.comments, Test_Type.name, Test.test_id FROM Test, Test_Type, People, Card  WHERE Test_Type.test_type = %(test_id)s AND Card.sn = %(sn)s AND People.person_id = Test.person_id AND Test_Type.test_type=Test.test_type_id AND Test.card_id = Card.card_id ORDER BY Test.day ASC" %{'test_id':test_type_id, 'sn':card_sn})
     return cur.fetchall()
 
 
 
 
 
-def add_test_tab(sn, mac, card_id):
+def add_test_tab(sn, card_id):
 
     print 			'<div class="row">'
     print  				'<div class="col-md-4">'
@@ -21,7 +21,6 @@ def add_test_tab(sn, mac, card_id):
     print 						'<label>Add New Test'
     print 							'<input type="submit">'
     print 							'<input type="hidden" name="serial_num" value= %s>' %sn
-    print                                                        '<input type="hidden" name="mac" value= %s>' %mac
     print                                                        '<input type="hidden" name="card_id" value= %s>' %card_id
     print 						'</label>'
     print 					'</form>'

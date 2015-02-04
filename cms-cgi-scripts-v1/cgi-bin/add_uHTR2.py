@@ -12,12 +12,11 @@ base.top()
 
 form = cgi.FieldStorage()
 
-if form.getvalue('serial_number') and form.getvalue('mac_address'):
+if form.getvalue('serial_number') 
     sn = cgi.escape(form.getvalue('serial_number'))
-    mac = cgi.escape(form.getvalue('mac_address'))
 
-    #print '<div> Serial Number = %(s)s , Mac = %(d)s </div>' %{'s': sn, 'd':mac} 
-    HomePageList.add_uHTR(sn, mac)
+    #print '<div> Serial Number = %(s)s , )s </div>' %{'s': sn} 
+    HomePageList.add_uHTR(sn)
     
     print    '<div class="row">'
     print            '<div class="col-md-3">'
@@ -43,7 +42,7 @@ if form.getvalue('serial_number') and form.getvalue('mac_address'):
 else:
     print    '<div class="row">'
     print            '<div class="col-md-12">'
-    print               '<h4><b> FAILED. Enter both SERIAL NUMBER and MAC ADDRESS </b></h4>'
+    print               '<h4><b> FAILED. Enter SERIAL NUMBER </b></h4>'
     print             '</div>'
     print    '</div>'
 

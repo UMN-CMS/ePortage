@@ -12,7 +12,7 @@ def add_test(person_id, test_type, serial_num, success, file1='', file2='', file
     cur = db.cursor()
 
     if serial_num:
-        cur.execute("SELECT card_id FROM card WHERE sn = %(n)s" %{"n":serial_num})
+        cur.execute("SELECT card_id FROM Card WHERE sn = %(n)s" %{"n":serial_num})
         row = cur.fetchone()
         card_id = row[0]
         
