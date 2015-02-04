@@ -25,7 +25,9 @@ create table Test
 	person_id int not null,
 	day timestamp not null, 
 	successful tinyint(1) not null,
-	comments varchar(320)
+	comments varchar(320),
+	INDEX (card_id),
+	INDEX (person_id)
 ); 	
 
 create table People
@@ -42,7 +44,8 @@ create table Attachments
 	test_id int,
 	attachdesc varchar (120),
 	comments varchar (200),
-	attachpath varchar (250)
+	attachpath varchar (250),
+	INDEX (test_id)
 );
 
 create table Card_Info_Types
@@ -60,5 +63,7 @@ create table Card_Info
 	primary key (info_id),
 	card_id int not null,
 	info_type int not null,
-	info varchar (300)
+	info varchar (300),
+	INDEX(card_id),
+	INDEX(info_type)
 );
