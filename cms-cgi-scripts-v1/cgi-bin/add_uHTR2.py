@@ -12,7 +12,7 @@ base.top()
 
 form = cgi.FieldStorage()
 
-if form.getvalue('serial_number') 
+if form.getvalue('serial_number'):
     sn = cgi.escape(form.getvalue('serial_number'))
 
     #print '<div> Serial Number = %(s)s , )s </div>' %{'s': sn} 

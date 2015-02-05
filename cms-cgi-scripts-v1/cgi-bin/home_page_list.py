@@ -75,7 +75,8 @@ def add_uHTR(serial_number):
     db = connect(1)
     cur = db.cursor()
 
-    cur.execute("INSERT INTO Card VALUES (%(sn)s, NULL)"%{"sn":serial_number} )
+    cur.execute("INSERT INTO Card set sn = '%s'; " % (serial_number)) 
+    #print '<div> INSERT INTO Card set sn = %s; </div>' %(serial_number)
     db.commit()
     
     
