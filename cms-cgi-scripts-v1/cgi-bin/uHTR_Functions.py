@@ -17,14 +17,12 @@ def add_test_tab(sn, card_id):
     print  				'<div class="col-md-4">'
     print  					'<h2><u>e-Portage for %s</u></h2>' %sn
     print  				'</div>'
-    print 				'<div class="col-md-4">'
-    print 					'<br><br>'
+    print 				'<div class="col-l-4">'
+    print 					'<br><br><br><br>'
     print 					'<form action="add_test.py">'
-    print 						'<label>Add New Test'
-    print 							'<input type="submit">'
     print 							'<input type="hidden" name="serial_num" value= %s>' %sn
-    print                                                        '<input type="hidden" name="card_id" value= %s>' %card_id
-    print 						'</label>'
+    print                                                       '<input type="hidden" name="card_id" value= %s>' %card_id 
+    print							'<button> Add A New Test </button>'
     print 					'</form>'
     print 				'</div>'
     print 			'</div>'
@@ -36,7 +34,7 @@ def ePortage(test_type_id, card_sn, test_name):
     t =  Portage_fetch(test_type_id, card_sn) 
     print  			'<div class="row">'
     print           			'<div class="col-md-12">'
-    print					'<h3>%(d)s. %(name)s </h3>' %{"d": test_type_id, "name":test_name}
+    print					'<h3> %(name)s </h3>' %{ "name":test_name}
     print					'<br>'
 
     n = 0
@@ -49,14 +47,21 @@ def ePortage(test_type_id, card_sn, test_name):
         print						'<tr>'
         print							'<th>Name</th>'
         print							'<th>Date</th>'
-        print							'<th>Success</th>'
+        print							'<th>Successful?</th>'
         print							'<th>Comments</th>'
         print						'</tr>'
         print						'<tr>'
-
+        i = 0
         for columns in attempts[:-2]:
-            print		    				'<td>%s</td>' %columns
-
+            if i == 2 : 
+		if attempts[i] == 1:
+			print					'<td>Yes</td>'
+		else:
+			print					'<td>No</td>'
+		i += 1
+	    else:	
+           	 print		    				'<td>%s</td>' %columns
+		 i += 1	
         print						'</tr>'
         print					    '</tbody>'
         print                               '</table>'

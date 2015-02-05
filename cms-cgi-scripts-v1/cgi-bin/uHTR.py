@@ -26,15 +26,6 @@ cur = db.cursor()
 cur.execute("select test_type, name from Test_Type where required = 1 order by test_type ASC")
 for test_type in cur:
 	uHTR_Functions.ePortage(test_type[0], serial_num, test_type[1])
-#uHTR_Functions.ePortage(1, serial_num, 'Internal links Lumi')
-#uHTR_Functions.ePortage(2, serial_num, 'Internal links F2B')
-#uHTR_Functions.ePortage(3, serial_num, 'Internal links IP Bus')
-#uHTR_Functions.ePortage(4, serial_num, 'I2C communication to mezz')
-#uHTR_Functions.ePortage(5, serial_num, 'I2C communication to SPF')
-#uHTR_Functions.ePortage(6, serial_num, 'I2C communication to PPoD')
-#uHTR_Functions.ePortage(7, serial_num, 'SDRAM')
-#uHTR_Functions.ePortage(8, serial_num, 'Firmware reload')
-#uHTR_Functions.ePortage(9, serial_num, 'MMC Operation')
 
 
 base.bottom()

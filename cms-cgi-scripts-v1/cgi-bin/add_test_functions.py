@@ -1,4 +1,5 @@
 from connect import connect
+import mysql.connector
 import base
 
 
@@ -17,7 +18,7 @@ def add_test(person_id, test_type, serial_num, success, file1='', file2='', file
         card_id = row[0]
         
 
-        cur.execute("INSERT INTO test (person_id, test_type_id, card_id, test_id, successful, day, comments) VALUES (%(pers_id)s, %(test_typ)s, %(card)s, NULL, %(succ)s, NOW(), '%(comment)s')"%{"pers_id": person_id, "test_typ": test_type, "card": card_id, "succ":success, "comment":comments})
+        cur.execute("INSERT INTO Test (person_id, test_type_id, card_id, test_id, successful, day, comments) VALUES (%(pers_id)s, %(test_typ)s, %(card)s, NULL, %(succ)s, NOW(), '%(comment)s')"%{"pers_id": person_id, "test_typ": test_type, "card": card_id, "succ":success, "comment":comments})
         db.commit()
 
         print '<div class ="row">'
@@ -40,9 +41,12 @@ def add_test(person_id, test_type, serial_num, success, file1='', file2='', file
 
 
 def add_test_template(serial_number):
+    
+    db = connect(0)
+    cur = db.cursor()
 
     print		'<form action="add_test2.py" method="post">'
-
+    print 			'<INPUT TYPE="hidden" name="serial_number" value="%s">' % (serial_number)
     print			'<div class="row">'
     print				'<div class="col-md-12">'
     print					'<h1>Add Test for Card %s</h1>' %serial_number
@@ -50,43 +54,38 @@ def add_test_template(serial_number):
     print			'</div>'
 
     print			'<br><br>'
+	
+    cur.execute("Select person_id, person_name from People;")
 
     print			'<div class="row">'
     print				'<div class="col-md-6">'
     print					'<label>Tester'
     print					'<select name="person_id">'
-    print						"<option value='1'>Michael</option>"
-    print						"<option value='2'>Asad</option>"
-    print						"<option value='3'>Quynh</option>"				
+    for person_id in cur:
+    	print						"<option value='%s'>%s</option>" % ( person_id[0] , person_id[1] )
+    					
     print					'</select>'
     print					'</label>'
     print				'</div>'
+    cur.execute("select test_type, name from Test_Type order by relative_order ASC;")
     print				'<div class="col-md-6">'
     print					'<label>Test Type'
     print					'<select name="test_type">'
-    print						'<option value="1">Internal links Lumi</option>'
-    print						'<option value="2">Internal links F2B</option>'
-    print						'<option value="3">Internal links IP Bus</option>'
-    print						'<option value="4">I2C communication to mezz</option>'
-    print						'<option value="5">I2C communication to SPF</option>'
-    print						'<option value="6">I2C communication to PPOD</option>'
-    print						'<option value="7">SDRAM</option>'
-    print						'<option value="8">Firmware Reload</option>'
-    print						'<option value="9">MMC Operation</option>'
+    for test_type in cur:
+    	print						'<option value="%s">%s</option>' % (test_type[0], test_type[1])
     print					'</select>'
     print					'</label>'
     print				'</div>'
     print			'</div>'
+    #print			'<br><br>'
 
-    print			'<br><br>'
-
-    print			'<div class = "row">'
-    print				'<div class = "col-md-6">'
-    print					'<label> Serial Number:'
-    print						'<input name="serial_number" value="%s">'%serial_number
-    print					'</label>'
-    print				'</div>'
-    print			'</div>'
+    #print			'<div class = "row">'
+    #print				'<div class = "col-md-6">'
+    #print					'<label> Serial Number:'
+    #print						'<input name="serial_number" value="%s">'%serial_number
+    #print					'</label>'
+    #print				'</div>'
+    #print			'</div>'
 
     print			'<br><br>'
 
@@ -108,7 +107,7 @@ def add_test_template(serial_number):
     print				'</div>'
     print				'<div class="col-md-6">'
     print					'<p>Comments</p>'
-    print					'<textarea name="comments"></textarea>'
+    print					'<textarea rows="5" cols="50" name="comments"></textarea>'
     print				'</div>'
     print			'</div>'
 
