@@ -12,7 +12,6 @@ print "Content-type: text/html\n"
 form = cgi.FieldStorage()
 #card_id = form.getvalue('card_id')
 serial_num = form.getvalue('serial_num')
-#mac = form.getvalue('mac')
 
 base.header(title='Add Test')
 base.top()

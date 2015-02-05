@@ -1,4 +1,6 @@
 from connect import connect
+
+
 def Portage_fetch(test_type_id, card_sn):
     db = connect(1)
     cur = db.cursor()
