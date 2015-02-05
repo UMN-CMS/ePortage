@@ -22,10 +22,9 @@ def render_list_uHTR():
             print '<div class="row">'
         print '<div class="col-md-4">'
         print '<form action="uHTR.py" enctype=\"multipart/form-data\" method = "get">'
-        print '<input type="hidden" name = "card_id" value = "%s">' %cards[2]
+        print '<input type="hidden" name = "card_id" value = "%s">' %cards[1]
         print '<input type="hidden" name = "serial_num" value = "%s">' %cards[0]
         print '<li><h4><input type=submit> %s </h4></li>' %cards[0]
-        print '<p>&nbsp;&nbsp;&nbsp;&nbsp; %s </p>' %cards[1]
         print '</form>'
         print '</div>'
 
@@ -76,7 +75,7 @@ def add_uHTR(serial_number):
     db = connect(1)
     cur = db.cursor()
 
-    cur.execute("INSERT INTO card VALUES (%(sn)s, NULL)"%{"sn":serial_number} )
+    cur.execute("INSERT INTO Card VALUES (%(sn)s, NULL)"%{"sn":serial_number} )
     db.commit()
     
     
