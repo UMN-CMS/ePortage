@@ -2,7 +2,7 @@
 
 import cgi
 import base
-import HomePageList
+import home_page_list
 
 
 
@@ -29,6 +29,6 @@ print    '</div>'
 print   '<br><br>'
 
 
-HomePageList.render_list_uHTR()
+home_page_list.render_list_uHTR()
 
 base.bottom()

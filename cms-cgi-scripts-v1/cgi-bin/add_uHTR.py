@@ -2,7 +2,7 @@
 
 import cgi
 import base
-import HomePageList
+import home_page_list
 
 #cgi header
 print "Content-type: text/html\n"
@@ -10,7 +10,7 @@ print "Content-type: text/html\n"
 base.header(title='Home Page uHTR Testing')
 base.top()
 
-HomePageList.add_uHTR_form()
+home_page_list.add_uHTR_form()
 
 
 print    '<div class="row">'
@@ -22,7 +22,7 @@ print    '</div>'
 
 print   '<br><br>'
 
-HomePageList.render_list_uHTR()
+home_page_list.render_list_uHTR()
 
 base.bottom()
 

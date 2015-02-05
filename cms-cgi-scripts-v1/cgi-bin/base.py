@@ -19,7 +19,7 @@ def top():
 
     print                               '<div class ="row">'
     print                                   '<div class = "col-md-12">'
-    print                                       '<a href="HomePage.py">'
+    print                                       '<a href="home_page.py">'
     print                                           '<button>  HOME  </button>'
     print                                       '</a>'
     print                                       '<a href="/summary">'

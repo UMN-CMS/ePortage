@@ -2,7 +2,7 @@
 
 import cgi
 import base
-import HomePageList
+import home_page_list
 import add_test_functions
 
 

@@ -2,7 +2,7 @@
 
 import cgi
 import base
-import HomePageList
+import home_page_list
 
 #cgi header
 print "Content-type: text/html\n"
@@ -16,7 +16,7 @@ if form.getvalue('serial_number')
     sn = cgi.escape(form.getvalue('serial_number'))
 
     #print '<div> Serial Number = %(s)s , )s </div>' %{'s': sn} 
-    HomePageList.add_uHTR(sn)
+    home_page_list.add_uHTR(sn)
     
     print    '<div class="row">'
     print            '<div class="col-md-3">'
@@ -34,7 +34,7 @@ if form.getvalue('serial_number')
     print   '<br><br>'
 
 
-    HomePageList.render_list_uHTR()
+    home_page_list.render_list_uHTR()
 
     base.bottom()
 
@@ -46,7 +46,7 @@ else:
     print             '</div>'
     print    '</div>'
 
-    HomePageList.add_uHTR_form()
+    home_page_list.add_uHTR_form()
 
 
     print    '<div class="row">'
@@ -58,7 +58,7 @@ else:
 
     print   '<br><br>'
 
-    HomePageList.render_list_uHTR()
+    home_page_list.render_list_uHTR()
 
     base.bottom()
 
