@@ -5,7 +5,7 @@ import cgi, os
 import cgitb; cgitb.enable()
 
 
-def add_test(person_id, test_type, serial_num, success, file1='', file2='', file3='', comments=''):
+def add_test(person_id, test_type, serial_num, success, file1='', file2='', file3='', comments='', file1desc='', file1comment='', file2desc='', file2comment='', file3desc='',file3comment=''):
     if success:
         success = 1
     else:
@@ -22,29 +22,40 @@ def add_test(person_id, test_type, serial_num, success, file1='', file2='', file
 
         cur.execute("INSERT INTO Test (person_id, test_type_id, card_id, test_id, successful, day, comments) VALUES (%(pers_id)s, %(test_typ)s, %(card)s, NULL, %(succ)s, NOW(), '%(comment)s')"%{"pers_id": person_id, "test_typ": test_type, "card": card_id, "succ":success, "comment":comments})
         db.commit()
-
-
+  
+	dc = connect(0)
+    	sor = dc.cursor()
+	sor.execute("SELECT test_id from Test order by day DESC;")
+	id1 = sor.fetchone()
+	id = id1[0]
+	
 	if file1.filename or file2.filename or file3.filename: 
-		
+		dd = connect(1)
+		cus = dd.cursor()
+
 		if file1.filename:
 			fn = os.path.basename(file1.filename)
 			open('files/' + fn, 'wb').write(file1.file.read())
 			print '<div> The file %s was uploaded successfully. </div>' % (fn)
+			cus.execute("INSERT INTO Attachments SET test_id=%s, attachdesc = '%s', comments = '%s', attachpath = '%s';" % ( id, file1desc, file1comment, fn ))
 
 		if file2.filename:
 			fn2 = os.path.basename(file2.filename)
 			open('files/' + fn2, 'wb').write(file2.file.read())
 			print '<div> The file %s was uploaded successfully. </div>' % (fn2)
+			cus.execute("INSERT INTO Attachments SET test_id=%s, attachdesc = '%s', comments = '%s', attachpath = '%s';" % ( id, file2desc, file2comment, fn2 ))
+
 		if file3.filename:
 			fn3 = os.path.basename(file3.filename)
 			open('files/' + fn3, 'wb').write(file3.file.read())
-			print '<div> The file %s was uploaded successfully. </div>' % (fn3)	
-	else:
-        	print '<div class ="row">'
- 		print			'<div class = "col-md-3">'
- 		print                       '<h3> Test Successfully Added </h3>'
- 		print                   '</div>'
- 		print  '</div>'
+			print '<div> The file %s was uploaded successfully. </div>' % (fn3)
+			cus.execute("INSERT INTO Attachments SET test_id=%s, attachdesc = '%s', comments = '%s', attachpath = '%s';" % ( id, file3desc, file3comment, fn3 ))	
+	
+       	print '<div class ="row">'
+ 	print			'<div class = "col-md-3">'
+ 	print                       '<h3> Test Successfully Added </h3>'
+ 	print                   '</div>'
+ 	print  '</div>'
 
         
     else:
@@ -121,8 +132,22 @@ def add_test_template(serial_number):
     print			'<div class="row">'
     print				'<div class="col-md-6">'
     print					"<P>Attachment 1: <INPUT type='file' name='attach1'>"
-    print					"<br><p>Attachment 2: <INPUT type='file' name='attach2'>"
-    print					"<br><p>Attachment 3: <INPUT type='file' name='attach3'>"
+    print 					"<p>Description: </p>"
+    print					'<textarea rows = "1" cols="35" name="file1desc"></textarea>'
+    print					'<p>Attachment comments:</p>'
+    print					'<textarea rows = "2" cols="35" name="file1comment"></textarea>'	
+
+    print					"<br><br><p>Attachment 2: <INPUT type='file' name='attach2'>"
+    print 					"<p>Description: </p>"
+    print					'<textarea rows = "1" cols="35" name="file2desc"></textarea>'
+    print					'<p>Attachment comments:</p>'
+    print					'<textarea rows = "2" cols="35" name="file2comment"></textarea>'
+
+    print					"<br><br><p>Attachment 3: <INPUT type='file' name='attach3'>"
+    print 					"<p>Description: </p>"
+    print					'<textarea rows = "1" cols="35" name="file3desc"></textarea>'
+    print					'<p>Attachment comments:</p>'
+    print					'<textarea rows = "2" cols="35" name="file3comment"></textarea>'   
     print				'</div>'
     print				'<div class="col-md-6">'
     print					'<p>Comments</p>'
