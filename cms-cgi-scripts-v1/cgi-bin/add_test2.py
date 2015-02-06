@@ -12,9 +12,9 @@ person_id = form.getvalue("person_id")
 test_type = form.getvalue("test_type")
 serial_num = form.getvalue("serial_number")
 success = form.getvalue("success")
-file1 = form.getvalue("attach1")
-file2 =  form.getvalue("attach2")
-file3 =  form.getvalue("attach3")
+file1 = form['attach1']
+file2 =  form['attach2']
+file3 =  form['attach3']
 comments = form.getvalue("comments")
 
 if file1:

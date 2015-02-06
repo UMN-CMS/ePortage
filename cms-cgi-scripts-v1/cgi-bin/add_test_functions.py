@@ -1,6 +1,8 @@
 from connect import connect
 import mysql.connector
 import base
+import cgi, os
+import cgitb; cgitb.enable()
 
 
 def add_test(person_id, test_type, serial_num, success, file1='', file2='', file3='', comments=''):
@@ -21,11 +23,28 @@ def add_test(person_id, test_type, serial_num, success, file1='', file2='', file
         cur.execute("INSERT INTO Test (person_id, test_type_id, card_id, test_id, successful, day, comments) VALUES (%(pers_id)s, %(test_typ)s, %(card)s, NULL, %(succ)s, NOW(), '%(comment)s')"%{"pers_id": person_id, "test_typ": test_type, "card": card_id, "succ":success, "comment":comments})
         db.commit()
 
-        print '<div class ="row">'
- 	print			'<div class = "col-md-3">'
- 	print                       '<h3> Test Successfully Added </h3>'
- 	print                   '</div>'
- 	print  '</div>'
+
+	if file1.filename or file2.filename or file3.filename: 
+		
+		if file1.filename:
+			fn = os.path.basename(file1.filename)
+			open('files/' + fn, 'wb').write(file1.file.read())
+			print '<div> The file %s was uploaded successfully. </div>' % (fn)
+
+		if file2.filename:
+			fn2 = os.path.basename(file2.filename)
+			open('files/' + fn2, 'wb').write(file2.file.read())
+			print '<div> The file %s was uploaded successfully. </div>' % (fn2)
+		if file3.filename:
+			fn3 = os.path.basename(file3.filename)
+			open('files/' + fn3, 'wb').write(file3.file.read())
+			print '<div> The file %s was uploaded successfully. </div>' % (fn3)	
+	else:
+        	print '<div class ="row">'
+ 		print			'<div class = "col-md-3">'
+ 		print                       '<h3> Test Successfully Added </h3>'
+ 		print                   '</div>'
+ 		print  '</div>'
 
         
     else:
@@ -45,7 +64,7 @@ def add_test_template(serial_number):
     db = connect(0)
     cur = db.cursor()
 
-    print		'<form action="add_test2.py" method="post">'
+    print		'<form action="add_test2.py" method="post" enctype="multipart/form-data">'
     print 			'<INPUT TYPE="hidden" name="serial_number" value="%s">' % (serial_number)
     print			'<div class="row">'
     print				'<div class="col-md-12">'
