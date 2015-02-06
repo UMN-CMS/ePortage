@@ -21,10 +21,7 @@ def render_list_uHTR():
         if n%3 == 0:
             print '<div class="row">'
         print '<div class="col-md-4">'
-        print '<form action="uHTR.py" enctype=\"multipart/form-data\" method = "get">'
-        print '<input type="hidden" name = "card_id" value = "%s">' %cards[1]
-        print '<input type="hidden" name = "serial_num" value = "%s">' %cards[0]
-        print '<li><h4><input type=submit> %s </h4></li>' %cards[0]
+        print '<li><h4><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </s>' %{'serial':cards[0], 'id':cards[1]}
         print '</form>'
         print '</div>'
 
