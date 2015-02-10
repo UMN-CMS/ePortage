@@ -42,9 +42,10 @@ create table Attachments
 	attach_id int unsigned auto_increment,	
 	primary key (attach_id),
 	test_id int,
+	attachmime varchar (30),
 	attachdesc varchar (120),
 	comments varchar (200),
-	attachpath varchar (250),
+	originalname varchar (200),
 	INDEX (test_id)
 );
 

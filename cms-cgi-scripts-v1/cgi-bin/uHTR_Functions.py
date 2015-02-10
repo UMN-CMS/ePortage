@@ -7,9 +7,11 @@ def Portage_fetch(test_type_id, card_sn):
     cur.execute("SELECT People.person_name, Test.day, Test.successful, Test.comments, Test_Type.name, Test.test_id FROM Test, Test_Type, People, Card  WHERE Test_Type.test_type = %(test_id)s AND Card.sn = %(sn)s AND People.person_id = Test.person_id AND Test_Type.test_type=Test.test_type_id AND Test.card_id = Card.card_id ORDER BY Test.day ASC" %{'test_id':test_type_id, 'sn':card_sn})
     return cur.fetchall()
 
-
-
-
+def Portage_fetch_attach(test_id):
+    db = connect(1)
+    cur = db.cursor()
+    cur.execute('SELECT attach_id, attachmime, attachdesc FROM Attachments WHERE test_id=%(tid)s ORDER BY attach_id' % {'tid':test_id})
+    return cur.fetchall()
 
 def add_test_tab(sn, card_id):
 
@@ -38,6 +40,7 @@ def ePortage(test_type_id, card_sn, test_name):
     n = 0
     for attempts in t:
         n += 1
+        ats = Portage_fetch_attach(attempts.test_id)
 
         print       			'<h4>Attempt: %d</h4>'%n
         print				'<table class="table table-bordered table-striped Portage_table" style="width:60%">'
