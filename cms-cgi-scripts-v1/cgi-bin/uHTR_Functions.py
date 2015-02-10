@@ -14,16 +14,14 @@ def Portage_fetch(test_type_id, card_sn):
 def add_test_tab(sn, card_id):
 
     print 			'<div class="row">'
-    print  				'<div class="col-md-4">'
+    print  				'<div class="col-md-8">'
     print  					'<h2><u>e-Portage for %s</u></h2>' %sn
     print  				'</div>'
-    print 				'<div class="col-l-4">'
+    print 				'<div class="col-md-4">'
     print 					'<br><br><br><br>'
-    print 					'<form action="add_test.py">'
-    print 							'<input type="hidden" name="serial_num" value= %s>' %sn
-    print                                                       '<input type="hidden" name="card_id" value= %s>' %card_id 
-    print							'<button> Add A New Test </button>'
-    print 					'</form>'
+    print                   '<a href="add_test.py?card_id=%(id)s&serial_num=%(serial)s">' %{'serial':sn, 'id':card_id}
+    print                          '<button> Add a New Test </button>'
+    print                   '</a>'
     print 				'</div>'
     print 			'</div>'
 

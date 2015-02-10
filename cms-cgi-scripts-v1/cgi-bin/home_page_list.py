@@ -21,8 +21,7 @@ def render_list_uHTR():
         if n%3 == 0:
             print '<div class="row">'
         print '<div class="col-md-4">'
-        print '<li><h4><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </s>' %{'serial':cards[0], 'id':cards[1]}
-        print '</form>'
+        print '<li><h4><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
         print '</div>'
 
         n += 1

@@ -52,10 +52,11 @@ def add_test(person_id, test_type, serial_num, success, file1='', file2='', file
 			cus.execute("INSERT INTO Attachments SET test_id=%s, attachdesc = '%s', comments = '%s', attachpath = '%s';" % ( id, file3desc, file3comment, fn3 ))	
 	
        	print '<div class ="row">'
- 	print			'<div class = "col-md-3">'
+ 	print			'<div class = "col-md-12">'
  	print                       '<h3> Test Successfully Added </h3>'
- 	print                   '</div>'
- 	print  '</div>'
+        print                       '<h4><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> Go back to Card #%(serial)s </h4>' %{'serial':serial_num, 'id':card_id}
+        print                   '</div>'
+ 	print '</div>'
 
         
     else:
