@@ -6,7 +6,7 @@ def get():
     db = connect(0)
     cur = db.cursor()
     
-    cur.execute("SELECT sn, Mac_address, Card_id FROM Card ORDER by sn ASC")
+    cur.execute("SELECT sn, Card_id FROM Card ORDER by sn ASC")
     rows = cur.fetchall()
  
     
