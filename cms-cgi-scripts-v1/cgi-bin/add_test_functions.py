@@ -3,9 +3,9 @@ import mysql.connector
 import base
 import cgi, os
 import cgitb; cgitb.enable()
+import settings
 
-
-def add_test(person_id, test_type, serial_num, success, file1='', file2='', file3='', comments='', file1desc='', file1comment='', file2desc='', file2comment='', file3desc='',file3comment=''):
+def add_test(person_id, test_type, serial_num, success, comments):
     if success:
         success = 1
     else:
@@ -15,50 +15,19 @@ def add_test(person_id, test_type, serial_num, success, file1='', file2='', file
     cur = db.cursor()
 
     if serial_num:
-        cur.execute("SELECT card_id FROM Card WHERE sn = %(n)s" %{"n":serial_num})
+        cur.execute("SELECT card_id FROM Card WHERE sn = %(n)d" %{"n":serial_num})
         row = cur.fetchone()
         card_id = row[0]
         
+        sql="INSERT INTO Test (person_id, test_type_id, card_id, successful, comments, day) VALUES (%s,%s,%s,%s,%s,NOW())"
+        # This is safer because Python takes care of escaping any illegal/invalid text
+        items=(person_id,test_type,card_id,success,comments)
+        cur.execute(sql,items)
+        test_id = cur.lastrowid
 
-        cur.execute("INSERT INTO Test (person_id, test_type_id, card_id, test_id, successful, day, comments) VALUES (%(pers_id)s, %(test_typ)s, %(card)s, NULL, %(succ)s, NOW(), '%(comment)s')"%{"pers_id": person_id, "test_typ": test_type, "card": card_id, "succ":success, "comment":comments})
         db.commit()
-  
-	dc = connect(0)
-    	sor = dc.cursor()
-	sor.execute("SELECT test_id from Test order by day DESC;")
-	id1 = sor.fetchone()
-	id = id1[0]
-	
-	if file1.filename or file2.filename or file3.filename: 
-		dd = connect(1)
-		cus = dd.cursor()
 
-		if file1.filename:
-			fn = os.path.basename(file1.filename)
-			open('files/' + fn, 'wb').write(file1.file.read())
-			print '<div> The file %s was uploaded successfully. </div>' % (fn)
-			cus.execute("INSERT INTO Attachments SET test_id=%s, attachdesc = '%s', comments = '%s', attachpath = '%s';" % ( id, file1desc, file1comment, fn ))
-
-		if file2.filename:
-			fn2 = os.path.basename(file2.filename)
-			open('files/' + fn2, 'wb').write(file2.file.read())
-			print '<div> The file %s was uploaded successfully. </div>' % (fn2)
-			cus.execute("INSERT INTO Attachments SET test_id=%s, attachdesc = '%s', comments = '%s', attachpath = '%s';" % ( id, file2desc, file2comment, fn2 ))
-
-		if file3.filename:
-			fn3 = os.path.basename(file3.filename)
-			open('files/' + fn3, 'wb').write(file3.file.read())
-			print '<div> The file %s was uploaded successfully. </div>' % (fn3)
-			cus.execute("INSERT INTO Attachments SET test_id=%s, attachdesc = '%s', comments = '%s', attachpath = '%s';" % ( id, file3desc, file3comment, fn3 ))	
-	
-       	print '<div class ="row">'
- 	print			'<div class = "col-md-12">'
- 	print                       '<h3> Test Successfully Added </h3>'
-        print                       '<h4><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> Go back to Card #%(serial)s </h4>' %{'serial':serial_num, 'id':card_id}
-        print                   '</div>'
- 	print '</div>'
-
-        
+        return test_id        
     else:
         print '<div class ="row">'
  	print			'<div class = "col-md-3">'
@@ -69,18 +38,33 @@ def add_test(person_id, test_type, serial_num, success, file1='', file2='', file
  	add_test_template(serial_num)
 
 
-
-
+def add_test_attachment(test_id, afile, desc, comments):
+    if afile.filename:
+        db = connect(1)
+        cur = db.cursor()
+        originalname = os.path.basename(afile.filename)
+        
+        cur.execute("INSERT INTO Attachments (test_id,attachmime,attachdesc,comments,originalname) VALUES (%s,%s,%s,%s,%s)",
+                    (test_id,afile.type,desc,comments,originalname));
+        att_id=cur.lastrowid
+        db.commit()
+        ofn=settings.getAttachmentPathFor(int(test_id),int(att_id));
+        sub_path = os.path.dirname(ofn)
+        if not os.path.exists(sub_path):
+            os.mkdir(sub_path)
+        open(ofn,'wb').write(afile.file.read())
+        print '<div> The file %s was uploaded successfully. </div>' % (originalname)
+    
 def add_test_template(serial_number):
     
     db = connect(0)
     cur = db.cursor()
 
     print		'<form action="add_test2.py" method="post" enctype="multipart/form-data">'
-    print 			'<INPUT TYPE="hidden" name="serial_number" value="%s">' % (serial_number)
+    print 			'<INPUT TYPE="hidden" name="serial_number" value="%d">' % (serial_number)
     print			'<div class="row">'
     print				'<div class="col-md-12">'
-    print					'<h1>Add Test for Card %s</h1>' %serial_number
+    print					'<h1>Add Test for Card %d</h1>' %serial_number
     print				'</div>'
     print			'</div>'
 
@@ -121,46 +105,46 @@ def add_test_template(serial_number):
     print			'<br><br>'
 
     print			'<div class="row">'
-    print				'<div class="col-md-4">'
+    print				'<div class="col-md-3">'
     print					'<label>Successful?'
-    print					"<INPUT type='checkbox' name='success'>"
+    print					"<INPUT type='checkbox' name='success' value='1'>"
     print					'</label>'
+    print				'</div>'
+    print				'<div class="col-md-9">'
+    print					'<label>Comments (Manditory)</label><p>'
+    print					'<textarea rows="5" cols="50" name="comments"></textarea>'
     print				'</div>'
     print			'</div>'
                                     
     print			'<br><br>'
-
     print			'<div class="row">'
     print				'<div class="col-md-6">'
-    print					"<P>Attachment 1: <INPUT type='file' name='attach1'>"
-    print 					"<p>Description: </p>"
-    print					'<textarea rows = "1" cols="35" name="file1desc"></textarea>'
-    print					'<p>Attachment comments:</p>'
-    print					'<textarea rows = "2" cols="35" name="file1comment"></textarea>'	
-
-    print					"<br><br><p>Attachment 2: <INPUT type='file' name='attach2'>"
-    print 					"<p>Description: </p>"
-    print					'<textarea rows = "1" cols="35" name="file2desc"></textarea>'
-    print					'<p>Attachment comments:</p>'
-    print					'<textarea rows = "2" cols="35" name="file2comment"></textarea>'
-
-    print					"<br><br><p>Attachment 3: <INPUT type='file' name='attach3'>"
-    print 					"<p>Description: </p>"
-    print					'<textarea rows = "1" cols="35" name="file3desc"></textarea>'
-    print					'<p>Attachment comments:</p>'
-    print					'<textarea rows = "2" cols="35" name="file3comment"></textarea>'   
-    print				'</div>'
-    print				'<div class="col-md-6">'
-    print					'<p>Comments</p>'
-    print					'<textarea rows="5" cols="50" name="comments"></textarea>'
+    print					'<input type="submit" value="Add Test">'
     print				'</div>'
     print			'</div>'
+    for iattach in (1,2,3):
+        print			'<br><hr><br>'    
+        print			'<div class="row">'
+        print				'<div class="col-md-2">'
+        print					"<b>Attachment %d:</b>" % (iattach)
+        print				'</div><div class="col-md-5">'
+        print					"<INPUT type='file' name='attach%d'>"% (iattach)	
+        print				'</div><div class="col-md-5">'
+        print 					"<label>Description:</label> <INPUT type='text' class='form-control' name='attachdesc%d'>"% (iattach)	
+        print                           '</div>'
+        print                   '</div>'
+        print			'<div class="row">'
+        print				'<div class="col-md-10 col-md-offset-2">'
+        print					'<label>Comments:</label>'
+        print					'<textarea rows = "2" cols="50" class="form-control" name="attachcomment%d"></textarea>' % (iattach)	
+        print                               '</div>'
+        print                       '</div>'
 
     print			'<br><br><br><br>'
 
     print			'<div class="row">'
     print				'<div class="col-md-6">'
-    print					'<input type="submit">'
+    print					'<input type="submit" value="Add Test">'
     print				'</div>'
     print			'</div>'
 

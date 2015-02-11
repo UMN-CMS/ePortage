@@ -1,3 +1,5 @@
+import re
+
 def header(title=''):
     print '<head>'
     print '<link  rel="stylesheet" href="static/css/bootstrap.min.css">'
@@ -41,3 +43,6 @@ def bottom():
     print '</body>'
     print '</html>'
     
+def cleanCGInumber(cgitext):
+    return int(re.sub('[^0-9]','',cgitext))
+
