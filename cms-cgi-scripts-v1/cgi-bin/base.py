@@ -44,5 +44,7 @@ def bottom():
     print '</html>'
     
 def cleanCGInumber(cgitext):
+    if cgitext is None:
+        return 0
     return int(re.sub('[^0-9]','',cgitext))
 
