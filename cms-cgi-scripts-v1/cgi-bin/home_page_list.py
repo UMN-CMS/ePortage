@@ -16,24 +16,27 @@ def render_list_uHTR():
     row = fetch_list_uHTR()
     n = 0
 
-    print '<ul>'
+    col1=''
+    col2=''
+    col3=''
+    
     for cards in row:
         if n%3 == 0:
-            print '<div class="row">'
-        print '<div class="col-md-4">'
-        print '<li><h4><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
-        print '</div>'
-
+            col1+='<li><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
+        if n%3 == 1:
+            col2+='<li><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
+        if n%3 == 2:
+            col3+='<li><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
         n += 1
         
-        if n%3 == 0:
-            print '</div>'
-            print '<hr><br>'
-        
-    print '</ul>'
-
-
-
+    print '<div class="row">'
+    print '<div class="col-md-4"><ul>'
+    print col1
+    print '</ul></div><div class="col-md-4"><ul>'
+    print col2
+    print '</ul></div><div class="col-md-4"><ul>'
+    print col3
+    print '</ul></div>'
 
 def add_uHTR_form():
     
