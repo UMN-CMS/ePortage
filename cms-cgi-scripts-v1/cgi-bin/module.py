@@ -3,7 +3,7 @@
 import cgi
 import base
 import home_page_list
-import module_Functions
+import module_functions
 from connect import connect
 
 #cgi header
