@@ -27,7 +27,7 @@ def top():
     print                                       '<a href="summary.py">'
     print					    '<button>  Summary  </button>'
     print					'</a>'
-    print					'<a href="/testers">'
+    print					'<a href="testers.py">'
     print					    '<button>  Testers  </button>'
     print   				        '</a>'
     #print					'<a href="add_test.py">'

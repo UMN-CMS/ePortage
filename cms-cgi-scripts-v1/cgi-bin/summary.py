@@ -29,7 +29,7 @@ print                '</tr>'
 
 for row in List_of_rows:
     print '<tr>'
-    print '<td> <a href=uHTR.py?card_id=%(id)s&serial_num=%(serial)s> %(serial)s </a></td>' %{'serial':row[0], 'id':row[1]}
+    print '<td> <a href=module.py?card_id=%(id)s&serial_num=%(serial)s> %(serial)s </a></td>' %{'serial':row[0], 'id':row[1]}
     #print '<td> %s </td>' %row[1]
     
     print '<td><ul>'

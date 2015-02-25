@@ -2,7 +2,7 @@
 
 import cgi
 import base
-import uHTR_Functions
+import module_functions
 from connect import connect
 import settings
 import os.path

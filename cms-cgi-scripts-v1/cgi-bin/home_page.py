@@ -9,7 +9,7 @@ import home_page_list
 #cgi header
 print "Content-type: text/html\n"
 
-base.header(title='Home Page uHTR Testing')
+base.header(title='ePortage Home Page')
 base.top()
 
 
@@ -20,7 +20,7 @@ print            '<b><em>(Sorted by Serial Number)</em></b>'
 print            '</div>'
 print            '<div class="col-md-3">'
 print                    '<br><br>'
-print                    '<a href="add_uHTR.py">'
+print                    '<a href="add_module.py">'
 print                            '<button type="button">Add a New Board</button>'
 print                    '</a>'
 print            '</div>'
@@ -29,6 +29,6 @@ print    '</div>'
 print   '<br><br>'
 
 
-home_page_list.render_list_uHTR()
+home_page_list.render_list_module()
 
 base.bottom()

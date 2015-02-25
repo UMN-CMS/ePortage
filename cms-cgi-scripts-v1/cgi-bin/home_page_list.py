@@ -2,7 +2,7 @@ from connect import connect
 import mysql.connector
 
 
-def fetch_list_uHTR():
+def fetch_list_module():
     db = connect(1)
     cur = db.cursor()
         
@@ -11,9 +11,9 @@ def fetch_list_uHTR():
     return rows
 
 
-def render_list_uHTR():
+def render_list_module():
 
-    row = fetch_list_uHTR()
+    row = fetch_list_module()
     n = 0
 
     col1=''
@@ -22,11 +22,11 @@ def render_list_uHTR():
     
     for cards in row:
         if n%3 == 0:
-            col1+='<li><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
+            col1+='<li><a href="module.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
         if n%3 == 1:
-            col2+='<li><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
+            col2+='<li><a href="module.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
         if n%3 == 2:
-            col3+='<li><a href="uHTR.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
+            col3+='<li><a href="module.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
         n += 1
         
     print '<div class="row">'
@@ -38,9 +38,9 @@ def render_list_uHTR():
     print col3
     print '</ul></div>'
 
-def add_uHTR_form():
+def add_module_form():
     
-    print    '<form method="post" class="sub-card-form" action="add_uHTR2.py">'
+    print    '<form method="post" class="sub-card-form" action="add_module2.py">'
     print    '<div class="row">'
     print            '<div class="col-md-12">'
     print                    '<h4><u>Adding a new Test Board</u></h4>'
@@ -70,7 +70,7 @@ def add_uHTR_form():
 
 
 
-def add_uHTR(serial_number):
+def add_module(serial_number):
     db = connect(1)
     cur = db.cursor()
 

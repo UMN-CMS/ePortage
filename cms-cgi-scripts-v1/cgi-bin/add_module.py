@@ -7,10 +7,10 @@ import home_page_list
 #cgi header
 print "Content-type: text/html\n"
 
-base.header(title='Home Page uHTR Testing')
+base.header(title='Add a new module to ePortage')
 base.top()
 
-home_page_list.add_uHTR_form()
+home_page_list.add_module_form()
 
 
 print    '<div class="row">'
@@ -22,7 +22,7 @@ print    '</div>'
 
 print   '<br><br>'
 
-home_page_list.render_list_uHTR()
+home_page_list.render_list_module()
 
 base.bottom()
 
