@@ -16,7 +16,7 @@ def get():
         
     pass_dic = dict()
     for sn in serial_numbers:
-        cur.execute("SELECT Test_Type.name FROM Test_Type, Card, Test WHERE Card.sn = %(n)s And Test.card_id = Card.card_id AND Test_Type.test_type = Test.test_type_id AND Test_Type.required =1 AND Test.successful = 1" %{"n": sn})
+        cur.execute("SELECT Test_Type.name FROM Test_Type, Card, Test WHERE Card.sn = %(n)s And Test.card_id = Card.card_id AND Test_Type.test_type = Test.test_type_id AND Test_Type.required =1 AND Test.successful = 1 ORDER by relative_order" %{"n": sn})
         passed = cur.fetchall()
         temp1 = []
         for x in passed:
@@ -25,10 +25,11 @@ def get():
         pass_dic[sn] = temp1
 
     list_of_all_required_tests = []
-    cur.execute("SELECT name FROM Test_Type WHERE Test_Type.required = 1")
+    test_dict = { }
+    cur.execute("SELECT name,test_type FROM Test_Type WHERE Test_Type.required = 1 ORDER by relative_order")
     for names in cur:
         list_of_all_required_tests.append(names[0])
-    
+        test_dict[names[0]]=names[1]
 
     List_of_lists = []
     for tests in rows:
@@ -39,7 +40,8 @@ def get():
         small_list.append(pass_dic[tests[0]])
         for remaining in list_of_all_required_tests:
             if remaining not in pass_dic[tests[0]]:
-                rem_list.append(remaining)
+                remneeds=[ remaining, test_dict[remaining] ]
+                rem_list.append(remneeds)
         small_list.append(rem_list)
         List_of_lists.append(small_list)
 

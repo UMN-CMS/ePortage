@@ -55,8 +55,9 @@ def add_test_attachment(test_id, afile, desc, comments):
         open(ofn,'wb').write(afile.file.read())
         print '<div> The file %s was uploaded successfully. </div>' % (originalname)
     
-def add_test_template(serial_number):
-    
+def add_test_template(serial_number,suggested_test):
+    if not suggested_test:
+        suggested_test=0
     db = connect(0)
     cur = db.cursor()
 
@@ -87,7 +88,10 @@ def add_test_template(serial_number):
     print					'<label>Test Type'
     print					'<select name="test_type">'
     for test_type in cur:
-    	print						'<option value="%s">%s</option>' % (test_type[0], test_type[1])
+        if test_type[0] == suggested_test:
+            print						'<option value="%s" selected>%s</option>' % (test_type[0], test_type[1])
+        else:
+            print						'<option value="%s">%s</option>' % (test_type[0], test_type[1])
     print					'</select>'
     print					'</label>'
     print				'</div>'

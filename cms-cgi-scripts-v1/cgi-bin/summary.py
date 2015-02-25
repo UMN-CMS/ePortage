@@ -22,8 +22,8 @@ print        '<table class="table" style="width:100%">'
 print            '<tbody>'
 print                '<tr>'
 print                    '<th> S/N </th>'
-print                    '<th> Tests Passed </th>'
-print                    '<th> Tests Remaining </th>'
+print                    '<th colspan=2> Tests Passed </th>'
+print                    '<th colspan=2> Tests Remaining </th>'
 print                    '<th> Final Status </th>'
 print                '</tr>'
 
@@ -32,15 +32,25 @@ for row in List_of_rows:
     print '<td> <a href=uHTR.py?card_id=%(id)s&serial_num=%(serial)s> %(serial)s </a></td>' %{'serial':row[0], 'id':row[1]}
     #print '<td> %s </td>' %row[1]
     
-    print '<td><select>'
-    for tests in row[2]:
-        print '<option> %s </option>' %tests
-    print '</select></td>'
+    print '<td><ul>'
+    for tests in row[2][0:][::2]:
+        print '<li>%s' %tests
+    print '</ul></td>'
 
-    print '<td><select>'
-    for tests in row[3]:
-        print '<option> %s </option>' %tests
-    print '</select></td>'
+    print '<td><ul>'
+    for tests in row[2][1:][::2]:
+        print '<li>%s' %tests
+    print '</ul></td>'
+
+    print '<td><ul>'
+    for tests in row[3][0:][::2]:
+        print '<li> <a href="add_test.py?serial_num=%d&suggested=%d">%s</a>' %(row[0],tests[1],tests[0])
+    print '</ul></td>'
+
+    print '<td><ul>'
+    for tests in row[3][1:][::2]:
+        print '<li> <a href="add_test.py?serial_num=%d&suggested=%d">%s</a>' %(row[0],tests[1],tests[0])
+    print '</ul></td>'
 
     print '<td> ? </td>'
 

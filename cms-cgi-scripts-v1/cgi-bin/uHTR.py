@@ -23,7 +23,7 @@ uHTR_Functions.add_test_tab(serial_num, card_id)
 db = connect(0)
 cur = db.cursor()
 
-cur.execute("select test_type, name from Test_Type where required = 1 order by test_type ASC")
+cur.execute("select test_type, name from Test_Type where required = 1 order by relative_order ASC")
 for test_type in cur:
 	uHTR_Functions.ePortageTest(test_type[0], serial_num, test_type[1])
 
