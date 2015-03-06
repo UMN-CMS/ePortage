@@ -2,7 +2,8 @@ create table Card
 (
 	sn int not null,
 	card_id int unsigned auto_increment,
-	primary key (card_id)
+	primary key (card_id),
+	UNIQUE(sn)
 );
 
 create table Test_Type
@@ -67,4 +68,11 @@ create table Card_Info
 	info varchar (300),
 	INDEX(card_id),
 	INDEX(info_type)
+);
+
+create table TestRevoke
+(
+	test_id int unsigned not null,
+	primary key(test_id),
+	comment varchar(120)
 );
