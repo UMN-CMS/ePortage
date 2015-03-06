@@ -71,11 +71,15 @@ def add_module_form():
 
 
 def add_module(serial_number):
-    db = connect(1)
-    cur = db.cursor()
+    try:
+        db = connect(1)
+        cur = db.cursor()
 
-    cur.execute("INSERT INTO Card set sn = '%s'; " % (serial_number)) 
-    #print '<div> INSERT INTO Card set sn = %s; </div>' %(serial_number)
-    db.commit()
+        cur.execute("INSERT INTO Card set sn = '%s'; " % (serial_number)) 
+        #print '<div> INSERT INTO Card set sn = %s; </div>' %(serial_number)
+        db.commit()
+        db.close()
+    except mysql.connector.Error as err:
+        print("Serial number already exists!")
     
     
