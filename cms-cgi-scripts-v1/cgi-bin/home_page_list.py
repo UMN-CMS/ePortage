@@ -80,6 +80,6 @@ def add_module(serial_number):
         db.commit()
         db.close()
     except mysql.connector.Error as err:
-        print("Serial number already exists!")
+       print("<h3>Serial number already exists!</h3>")
     
     
