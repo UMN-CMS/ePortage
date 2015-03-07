@@ -10,7 +10,7 @@ def Portage_fetch(test_type_id, card_sn):
 def Portage_fetch_revokes(card_sn):
     db=connect(0)
     cur = db.cursor()
-    cur.execute("SELECT TestRevoke.test_id, TestRevoke.comment FROM TestRevoke,Test,Card WHERE Card.sn = %(sn)s AND Card.card_id = Test.card_id AND Test.test_id = TestRevoke.test_id")
+    cur.execute("SELECT TestRevoke.test_id, TestRevoke.comment FROM TestRevoke,Test,Card WHERE Card.sn = %(sn)s AND Card.card_id = Test.card_id AND Test.test_id = TestRevoke.test_id" %{'sn':card_sn})
     # build a dictionary
     revoked={}
     for fromdb in cur.fetchall():
@@ -51,30 +51,31 @@ def ePortageTest(test_type_id, card_sn, test_name, revokes):
     for attempt in attempts:
         n += 1
 
-        testid=attempt[5]
-        if testid in revokes:
-            print "I was revoked!"
-
         print       			'<h4>Attempt: %d</h4>'%n
         print				'<table class="table table-bordered table-striped Portage_table" style="width:60%">'
         print					    '<tbody>'
         print						'<tr>'
         print							'<th>Name</th>'
         print							'<th>Date</th>'
-        print							'<th>Successful?</th>'
+        print							'<th colspan=2>Successful?</th>'
 #        print							'<th>Comments</th>'
         print						'</tr>'
         print						'<tr>'
         print					                '<td> %(pname)s </td>' %{ "pname":attempt[0]}
         print					                '<td> %(when)s </td>' %{ "when":attempt[1]}
         if attempt[2] == 1:
-			print					'<td>Yes</td>'
+            if attempt[5] in revokes:
+			print					'<td><b>Revoked</b>: %(comment)s </td>' %{ "comment":revokes[attempt[5]] }
+            else:
+			print					'<td align=left> Yes </td>'
+                        print "<td align=right style='{ background-color: yellow; }' ><a href='revoke_success.py?test_id=%(id)s'>Revoke</a></td>" %{ "id":attempt[5]}
+
         else:
-			print					'<td>No</td>'
+			print					'<td colspan=2>No</td>'
         print						'</tr>'
         print						'<tr>'
         print					                '<td><b>Comments:</b></td>' 
-        print					                '<td colspan=2> %(comm)s </td>' %{ "comm":attempt[3]}
+        print					                '<td colspan=3> %(comm)s </td>' %{ "comm":attempt[3]}
         print						'</tr>'
         attachments=Portage_fetch_attach(attempt[5])
         for afile in attachments:

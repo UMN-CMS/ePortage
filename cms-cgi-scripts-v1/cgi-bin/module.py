@@ -20,7 +20,7 @@ base.top()
 
 module_functions.add_test_tab(serial_num, card_id)
 
-revokes=module_function.Portage_fetch_revokes(serial_num)
+revokes=module_functions.Portage_fetch_revokes(serial_num)
 
 db = connect(0)
 cur = db.cursor()
