@@ -1,4 +1,5 @@
 from connect import connect
+import module_functions
 import mysql.connector
 
 def get():
@@ -16,12 +17,14 @@ def get():
         
     pass_dic = dict()
     for sn in serial_numbers:
-        cur.execute("SELECT Test_Type.name FROM Test_Type, Card, Test WHERE Card.sn = %(n)s And Test.card_id = Card.card_id AND Test_Type.test_type = Test.test_type_id AND Test_Type.required =1 AND Test.successful = 1 ORDER by relative_order" %{"n": sn})
+        cur.execute("SELECT Test_Type.name,Test.test_id FROM Test_Type, Card, Test WHERE Card.sn = %(n)s And Test.card_id = Card.card_id AND Test_Type.test_type = Test.test_type_id AND Test_Type.required =1 AND Test.successful = 1 ORDER by relative_order" %{"n": sn})
         passed = cur.fetchall()
+        revoked = module_functions.Portage_fetch_revokes(sn)
         temp1 = []
         for x in passed:
-            if x[0] not in temp1:
-                temp1.append(x[0])
+            if x[1] not in revoked:
+                if x[0] not in temp1:
+                    temp1.append(x[0])
         pass_dic[sn] = temp1
 
     list_of_all_required_tests = []

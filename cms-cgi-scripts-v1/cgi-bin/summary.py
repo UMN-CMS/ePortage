@@ -5,6 +5,7 @@ import base
 from connect import connect
 import mysql.connector
 from summary_functions import get
+import module_functions
 
 
 
@@ -24,7 +25,7 @@ print                '<tr>'
 print                    '<th> S/N </th>'
 print                    '<th colspan=2> Tests Passed </th>'
 print                    '<th colspan=2> Tests Remaining </th>'
-print                    '<th> Final Status </th>'
+#print                    '<th> Final Status </th>'
 print                '</tr>'
 
 for row in List_of_rows:
@@ -52,7 +53,7 @@ for row in List_of_rows:
         print '<li> <a href="add_test.py?serial_num=%d&suggested=%d">%s</a>' %(row[0],tests[1],tests[0])
     print '</ul></td>'
 
-    print '<td> ? </td>'
+#    print '<td> ? </td>'
 
     print '</tr>'
 
