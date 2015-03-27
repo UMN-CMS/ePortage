@@ -123,6 +123,10 @@ grant_access( db )
 os.system("chmod a+x connect.py")
 os.system("mv connect.py ../cms-cgi-scripts-v1/cgi-bin/")
 
+os.chdir("../cms-cgi-scripts-v1")
+os.system("cp ../html/files/cmslogo.jpg static/files/")
+os.system("cp ../html/files/us-cms.gif static/files/")
+
 db.close()
 
 
