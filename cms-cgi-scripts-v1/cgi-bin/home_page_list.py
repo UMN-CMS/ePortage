@@ -8,9 +8,11 @@ def fetch_list_tests():
     rows = cur.fetchall()
     cur.execute("select Test_Type.name,COUNT(*) from Test,Test_Type WHERE Test.test_type_id=Test_Type.test_type  GROUP BY Test.test_type_id ORDER BY Test_Type.relative_order");
     rows2 = cur.fetchall()
+    finalrows = ()
     for i in range (0,len(rows)):
-        rows[i].append(rows2[i][1])
-    return rows
+        arow=(rows[i][0], rows[i][1],rows[i][2],rows2[i][1])
+        finalrows.append(arow)
+    return finalrows
 
 def render_list_tests():
     rows = fetch_list_tests()
