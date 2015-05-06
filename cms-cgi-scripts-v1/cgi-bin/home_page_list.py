@@ -1,11 +1,38 @@
 from connect import connect
 import mysql.connector
 
+def fetch_list_tests():
+    db = connect(0)
+    cur=db.cursor()
+    cur.execute("select Test_Type.name,COUNT(*),COUNT(DISTINCT Test.card_id) from Test,Test_Type WHERE Test.successful=1 and Test.test_type_id=Test_Type.test_type  GROUP BY Test.test_type_id ORDER BY Test_Type.relative_order");
+    rows = cur.fetchall()
+    cur.execute("select Test_Type.name,COUNT(*) from Test,Test_Type WHERE Test.test_type_id=Test_Type.test_type  GROUP BY Test.test_type_id ORDER BY Test_Type.relative_order");
+    rows2 = cur.fetchall()
+    for i in range (0,len(rows)):
+        rows[i].append(rows2[i][1])
+    return rows
+
+def render_list_tests():
+    rows = fetch_list_tests()
+    
+    print    '<div class="row">'
+    print            '<div class="col-md-3"><b>Test</b></div>'
+    print            '<div class="col-md-3"><b>Total Tests</b></div>'
+    print            '<div class="col-md-3"><b>Total Successful Tests</b></div>'
+    print            '<div class="col-md-3"><b>Total Cards with Successful Tests</b></div>'
+    print    '</div>'
+    for test in rows:
+            print    '<div class="row">'
+            print            '<div class="col-md-3">%s</div>' % (test[0])
+            print            '<div class="col-md-3">%s</div>' % (test[3])
+            print            '<div class="col-md-3">%s</div>' % (test[1])
+            print            '<div class="col-md-3">%s</div>' % (test[2])
+            print    '</div>'            
 
 def fetch_list_module():
-    db = connect(1)
+    db = connect(0)
     cur = db.cursor()
-        
+
     cur.execute("SELECT sn, Card_id FROM Card ORDER by Card.sn ASC")
     rows = cur.fetchall()
     return rows
