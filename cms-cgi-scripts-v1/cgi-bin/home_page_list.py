@@ -11,25 +11,27 @@ def fetch_list_tests():
     finalrows = ()
     for i in range (0,len(rows)):
         arow=(rows[i][0], rows[i][1],rows[i][2],rows2[i][1])
-        finalrows.append(arow)
+        finalrows=finalrows+(arow,)
     return finalrows
 
 def render_list_tests():
     rows = fetch_list_tests()
     
     print    '<div class="row">'
-    print            '<div class="col-md-3"><b>Test</b></div>'
-    print            '<div class="col-md-3"><b>Total Tests</b></div>'
-    print            '<div class="col-md-3"><b>Total Successful Tests</b></div>'
-    print            '<div class="col-md-3"><b>Total Cards with Successful Tests</b></div>'
-    print    '</div>'
+    print            '<div class="col-md-1"> </div>'
+    print            '<div class="col-md-11"><table class="table table-bordered table-striped Portage_table">'
+    print            '<tr><th>Test<th>Total Tests<th>Total Successful Tests<th>Total Cards with Successful Tests</tr>'
+#    print            '<div class="col-md-3"><b>Total Tests</b></div>'
+#    print            '<div class="col-md-3"><b>Total Successful Tests</b></div>'
+#    print            '<div class="col-md-3"><b>Total Cards with Successful Tests</b></div>'
     for test in rows:
-            print    '<div class="row">'
-            print            '<div class="col-md-3">%s</div>' % (test[0])
-            print            '<div class="col-md-3">%s</div>' % (test[3])
-            print            '<div class="col-md-3">%s</div>' % (test[1])
-            print            '<div class="col-md-3">%s</div>' % (test[2])
-            print    '</div>'            
+#            print    '<div class="row">'
+            print            '<tr><td>%s' % (test[0])
+            print            '<td>%s' % (test[3])
+            print            '<td>%s' % (test[1])
+            print            '<td>%s' % (test[2])
+            print    '</tr>'            
+    print    '</table></div>'
 
 def fetch_list_module():
     db = connect(0)

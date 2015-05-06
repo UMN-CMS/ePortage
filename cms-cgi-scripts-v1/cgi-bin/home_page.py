@@ -13,18 +13,12 @@ base.header(title='ePortage Home Page')
 base.top()
 
 print    '<div class="row">'
-print            '<div class="col-md-3">'
+print            '<div class="col-md-12">'
 print            '<h2>Count by Test</h2>' 
 print            '</div>'
-home_page_list.render_list_tests()
-
-print            '<div class="col-md-3">'
-print                    '<br><br>'
-print                    '<a href="add_module.py">'
-print                            '<button type="button">Add a New Board</button>'
-print                    '</a>'
-print            '</div>'
 print    '</div>'
+
+home_page_list.render_list_tests()
 
 
 
