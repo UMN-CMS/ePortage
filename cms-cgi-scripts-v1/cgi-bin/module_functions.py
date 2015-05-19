@@ -1,5 +1,5 @@
 from connect import connect
-
+import sys
 
 def Portage_fetch(test_type_id, card_sn):
     db = connect(0)
@@ -68,7 +68,8 @@ def ePortageTest(test_type_id, card_sn, test_name, revokes):
 			print					'<td><b>Revoked</b>: %(comment)s </td>' %{ "comment":revokes[attempt[5]] }
             else:
 			print					'<td align=left> Yes </td>'
-                        print "<td align=right style='{ background-color: yellow; }' ><a href='revoke_success.py?test_id=%(id)s'>Revoke</a></td>" %{ "id":attempt[5]}
+                        if len(sys.argv) == 1:
+				print "<td align=right style='{ background-color: yellow; }' ><a href='revoke_success.py?test_id=%(id)s'>Revoke</a></td>" %{ "id":attempt[5]}
 
         else:
 			print					'<td colspan=2>No</td>'
