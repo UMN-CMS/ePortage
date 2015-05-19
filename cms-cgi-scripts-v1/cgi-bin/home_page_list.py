@@ -1,5 +1,6 @@
 from connect import connect
 import mysql.connector
+import sys
 
 def fetch_list_tests():
     db = connect(0)
@@ -50,16 +51,24 @@ def render_list_module():
     col1=''
     col2=''
     col3=''
-    
-    for cards in row:
-        if n%3 == 0:
-            col1+='<li><a href="module.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
-        if n%3 == 1:
-            col2+='<li><a href="module.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
-        if n%3 == 2:
-            col3+='<li><a href="module.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
-        n += 1
-        
+    if len(sys.argv) == 1: 
+    	for cards in row:
+        	if n%3 == 0:
+            		col1+='<li><a href="module.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
+        	if n%3 == 1:
+            		col2+='<li><a href="module.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
+        	if n%3 == 2:
+            		col3+='<li><a href="module.py?card_id=%(id)s&serial_num=%(serial)s"> %(serial)s </h4></li>' %{'serial':cards[0], 'id':cards[1]}
+        	n += 1
+    else:
+     	for cards in row:
+        	if n%3 == 0:
+            		col1+='<li><a href="card_%(serial)s.html"> %(serial)s </h4></li>' %{'serial':cards[0]}
+        	if n%3 == 1:
+            		col2+='<li><a href="card_%(serial)s.html"> %(serial)s </h4></li>' %{'serial':cards[0]}
+        	if n%3 == 2:
+            		col3+='<li><a href="card_%(serial)s.html"> %(serial)s </h4></li>' %{'serial':cards[0]}
+        	n += 1   
     print '<div class="row">'
     print '<div class="col-md-4"><ul>'
     print col1

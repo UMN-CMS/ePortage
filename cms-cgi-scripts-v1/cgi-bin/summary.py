@@ -6,11 +6,14 @@ from connect import connect
 import mysql.connector
 from summary_functions import get
 import module_functions
+import sys
 
+if len(sys.argv) != 1:
+	sys.stdout = open('../cgi-bin/archive/summary.html', 'w')
 
-
-#cgi header
-print "Content-type: text/html\n"
+else:
+	#cgi header
+	print "Content-type: text/html\n"
 
 base.header(title='Summary')
 base.top()
@@ -30,9 +33,11 @@ print                '</tr>'
 
 for row in List_of_rows:
     print '<tr>'
-    print '<td> <a href=module.py?card_id=%(id)s&serial_num=%(serial)s> %(serial)s </a></td>' %{'serial':row[0], 'id':row[1]}
-    #print '<td> %s </td>' %row[1]
-    
+    if len(sys.argv) == 1:
+	print '<td> <a href=module.py?card_id=%(id)s&serial_num=%(serial)s> %(serial)s </a></td>' %{'serial':row[0], 'id':row[1]}
+    	#print '<td> %s </td>' %row[1]
+    else:
+	print '<td> <a href="card_%(serial)s.html"> %(serial)s </a></td>' %{'serial':row[0]}
     print '<td><ul>'
     for tests in row[2][0:][::2]:
         print '<li>%s' %tests
@@ -44,13 +49,22 @@ for row in List_of_rows:
     print '</ul></td>'
 
     print '<td><ul>'
-    for tests in row[3][0:][::2]:
-        print '<li> <a href="add_test.py?serial_num=%d&suggested=%d">%s</a>' %(row[0],tests[1],tests[0])
+    if len(sys.argv) == 1:
+    	for tests in row[3][0:][::2]:
+		print '<li> <a href="add_test.py?serial_num=%d&suggested=%d">%s</a>' %(row[0],tests[1],tests[0])
+
+    else:
+	for tests in row[3][0:][::2]:
+        	print '<li>%s' %tests[0] 
     print '</ul></td>'
 
     print '<td><ul>'
-    for tests in row[3][1:][::2]:
-        print '<li> <a href="add_test.py?serial_num=%d&suggested=%d">%s</a>' %(row[0],tests[1],tests[0])
+    if len(sys.argv) == 1:
+	for tests in row[3][1:][::2]:
+        	print '<li> <a href="add_test.py?serial_num=%d&suggested=%d">%s</a>' %(row[0],tests[1],tests[0])
+    else:
+	for tests in row[3][1:][::2]:
+    		print '<li>%s' %tests[0]
     print '</ul></td>'
 
 #    print '<td> ? </td>'

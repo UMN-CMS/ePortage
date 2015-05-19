@@ -5,9 +5,11 @@ import base
 import home_page_list
 import sys
 
-
-#cgi header
-print "Content-type: text/html\n"
+if(len(sys.argv) != 1):
+	sys.stdout = open('../cgi-bin/archive/home_page.html', 'w') 
+else:
+	#cgi header
+	print "Content-type: text/html\n"
 
 base.header(title='ePortage Home Page')
 base.top()
