@@ -1,5 +1,7 @@
 from connect import connect
 import sys
+import home_page
+from get_attach import save
 
 def Portage_fetch(test_type_id, card_sn):
     db = connect(0)
@@ -80,8 +82,17 @@ def ePortageTest(test_type_id, card_sn, test_name, revokes):
         print						'</tr>'
         attachments=Portage_fetch_attach(attempt[5])
         for afile in attachments:
-            print '<tr><td>Attachment: <a href="get_attach.py?attach_id=%s">%s</a><td colspan=2><i>%s</i></tr>' % (afile[0],afile[3],afile[2])
-        
+		if len(sys.argv) == 1:
+            		print '<tr><td>Attachment: <a href="get_attach.py?attach_id=%s">%s</a><td colspan=2><i>%s</i></tr>' % (afile[0],afile[3],afile[2])
+        	else:
+			print '<tr><td>Attachment: <a href="../archive/files/%s.html">%s</a><td colspan=2><i>%s</i></tr>' % (afile[0], afile[3], afile[2])
+			stdout = sys.stdout
+			sys.stdout = open("../cgi-bin/archive/files/%s.html" % (afile[0]),'w')
+			save(afile[0])
+			sys.stdout.close()
+			sys.stdout = stdout
+			
+
         print					    '</tbody>'
         print                               '</table>'
  					

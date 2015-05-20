@@ -8,6 +8,7 @@ import module_functions
 import summary
 from summary_functions import get
 
+
 home_page
 
 row = home_page_list.fetch_list_module()
