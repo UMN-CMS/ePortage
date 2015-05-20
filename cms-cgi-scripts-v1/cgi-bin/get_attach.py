@@ -52,6 +52,5 @@ def save(attach_id):
    		        print "<h1>Attachment not found</h1>"
        		 else:
         		statinfo = os.stat(attpath)
-        		print 'Content-type: %s \r\nContent-length: %d \r\nContent-Disposition: INLINE; filename="%s" \n' % (thevals[0][1],statinfo.st_size,thevals[0][2])
         		sys.stdout.write(file(attpath,"rb").read() )
 	cur.close()
