@@ -1,17 +1,18 @@
+import sys
+
+if len(sys.argv) == 1:
+	print "Please input a system variable after the script call."
+	sys.exit()
 import cgi
 import base
-import home_page_list
+from home_page_list import fetch_list_module
 from connect import connect
-import sys
 import home_page
 import module_functions
 import summary
 from summary_functions import get
 
-
-home_page
-
-row = home_page_list.fetch_list_module()
+row = fetch_list_module()
 
 for cards in row:
 	sys.stdout = open('../cgi-bin/archive/card_%(sn)s.html' %{'sn':cards[0]}, 'w') 
@@ -26,11 +27,9 @@ for cards in row:
 
 	cur.execute("select test_type, name from Test_Type where required = 1 order by relative_order ASC")
 	for test_type in cur:
-        	module_functions.ePortageTest(test_type[0], serial_num, test_type[1], revokes)
+       		module_functions.ePortageTest(test_type[0], serial_num, test_type[1], revokes)
 	
 
 	base.bottom()
-
-summary
 
 
