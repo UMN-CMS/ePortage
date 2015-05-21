@@ -84,9 +84,9 @@ def ePortageTest(test_type_id, card_sn, test_name, revokes):
 		if len(sys.argv) == 1:
             		print '<tr><td>Attachment: <a href="get_attach.py?attach_id=%s">%s</a><td colspan=2><i>%s</i></tr>' % (afile[0],afile[3],afile[2])
         	else:
-			print '<tr><td>Attachment: <a href="../archive/files/%s.html">%s</a><td colspan=2><i>%s</i></tr>' % (afile[0], afile[3], afile[2])
+			print '<tr><td>Attachment: <a href="%s.html">%s</a><td colspan=2><i>%s</i></tr>' % (afile[0], afile[3], afile[2])
 			stdout = sys.stdout
-			sys.stdout = open("%(loc)s/files/%(f)s.html" %{'loc':sys.argv[1], 'f':afile[0]},'w')
+			sys.stdout = open("%(loc)s/%(f)s.html" %{'loc':sys.argv[1], 'f':afile[0]},'w')
 			save(afile[0])
 			sys.stdout.close()
 			sys.stdout = stdout
