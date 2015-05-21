@@ -3,7 +3,6 @@ import sys
 if len(sys.argv) == 1:
 	print "Please input a system variable after the script call."
 	sys.exit()
-import cgi
 import base
 from home_page_list import fetch_list_module
 from connect import connect
