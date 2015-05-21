@@ -6,6 +6,7 @@ import home_page_list
 import sys
 
 if(len(sys.argv) != 1):
+	stdout = sys.stdout
 	sys.stdout = open('../cgi-bin/archive/home_page.html', 'w') 
 else:
 	#cgi header
@@ -40,3 +41,7 @@ print   '<br><br>'
 home_page_list.render_list_module()
 
 base.bottom()
+
+if len(sys.argv) != 1:
+	sys.stdout.close()
+	sys.stdout = stdout

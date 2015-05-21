@@ -1,6 +1,5 @@
 from connect import connect
 import sys
-import home_page
 from get_attach import save
 
 def Portage_fetch(test_type_id, card_sn):
