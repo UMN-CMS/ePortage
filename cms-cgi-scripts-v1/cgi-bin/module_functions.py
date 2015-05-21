@@ -86,7 +86,7 @@ def ePortageTest(test_type_id, card_sn, test_name, revokes):
         	else:
 			print '<tr><td>Attachment: <a href="../archive/files/%s.html">%s</a><td colspan=2><i>%s</i></tr>' % (afile[0], afile[3], afile[2])
 			stdout = sys.stdout
-			sys.stdout = open("../cgi-bin/archive/files/%s.html" % (afile[0]),'w')
+			sys.stdout = open("%(loc)s/files/%(f)s.html" %{'loc':sys.argv[1], 'f':afile[0]},'w')
 			save(afile[0])
 			sys.stdout.close()
 			sys.stdout = stdout

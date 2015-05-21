@@ -15,7 +15,7 @@ row = fetch_list_module()
 
 for cards in row:
 	stdout = sys.stdout
-	sys.stdout = open('../cgi-bin/archive/card_%(sn)s.html' %{'sn':cards[0]}, 'w') 
+	sys.stdout = open('%(loc)s/card_%(sn)s.html' %{ 'loc':sys.argv[1],'sn':cards[0]}, 'w') 
 	serial_num = cards[0]
 	card_id = cards[1]
 	base.header(title='uHTR ePortage')

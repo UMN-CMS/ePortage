@@ -9,7 +9,7 @@ import module_functions
 import sys
 
 if len(sys.argv) != 1:
-	sys.stdout = open('../cgi-bin/archive/summary.html', 'w')
+	sys.stdout = open('%(loc)s/summary.html' %{'loc':sys.argv[1]}, 'w')
 
 else:
 	#cgi header

@@ -7,7 +7,7 @@ import sys
 
 if(len(sys.argv) != 1):
 	stdout = sys.stdout
-	sys.stdout = open('../cgi-bin/archive/home_page.html', 'w') 
+	sys.stdout = open('%(loc)s/home_page.html' %{ 'loc':sys.argv[1]}, 'w') 
 else:
 	#cgi header
 	print "Content-type: text/html\n"

@@ -7,7 +7,7 @@ import settings
 import os.path
 import sys
 
-if len(sys.argv) == 1:
+if __name__ == "__main__": 
 	form = cgi.FieldStorage()
 	attach_id = base.cleanCGInumber(form.getvalue('attach_id'))
 
