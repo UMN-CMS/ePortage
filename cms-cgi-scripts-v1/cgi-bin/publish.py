@@ -10,6 +10,7 @@ import home_page
 import module_functions
 import summary
 from summary_functions import get
+import shutil
 
 row = fetch_list_module()
 
@@ -33,4 +34,9 @@ for cards in row:
 
 	base.bottom()
 
+shutil.copy('../static/css/bootstrap.min.css', '%s/bootstrap.min.css' %(sys.argv[1]))
+
+shutil.copy('../static/css/style.css', '%s/style.css' %(sys.argv[1]))
+
+shutil.copy('../static/files/us-cms.gif', '%s/us-cms.gif' %(sys.argv[1]))
 
