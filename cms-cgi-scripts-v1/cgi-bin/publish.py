@@ -1,8 +1,12 @@
 import sys
+import os
 
 if len(sys.argv) == 1:
 	print "Please input a destination directory after the script call."
 	sys.exit()
+else:
+	if not os.path.isdir(sys.argv[1]):
+		os.makedirs(sys.argv[1])
 import base
 from home_page_list import fetch_list_module
 from connect import connect
