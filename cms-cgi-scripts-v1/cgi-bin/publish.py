@@ -16,6 +16,15 @@ import summary
 from summary_functions import get
 import shutil
 
+def copytree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
 row = fetch_list_module()
 
 for cards in row:
@@ -38,9 +47,7 @@ for cards in row:
 
 	base.bottom()
 
-shutil.copy('../static/css/bootstrap.min.css', '%s/bootstrap.min.css' %(sys.argv[1]))
+copytree('../static/css', '%s' %(sys.argv[1]))
 
-shutil.copy('../static/css/style.css', '%s/style.css' %(sys.argv[1]))
-
-shutil.copy('../static/files/us-cms.gif', '%s/us-cms.gif' %(sys.argv[1]))
+copytree('../static/files' , '%s' %sys.argv[1])
 
